@@ -109,18 +109,18 @@ void imprimeFuncaoArvore(Arvore *a){
             printf(")");
         }
         else{
-            imprimeFuncaoArvore(a->esquerda);
             printf("%c", a->valor);
-            imprimeFuncaoArvore(a->direita);
-
         }
     }
 }
 
-void imprimeFUncaoPilha(Pilha *p) {
+void imprimeFuncaoPilha(Pilha *p) {
 
     Elemento *aux = p->topo;
-
+    if(p->tamanho > 1){
+        printf("Função inválida");
+        exit(-1);
+    }
     while(aux != NULL){
         imprimeFuncaoArvore(p->topo->dado);
         aux = aux->proximo;
@@ -143,7 +143,7 @@ Pilha *arvoreFuncao(char *str){
         }
         else if(str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^'){
             
-            if(p->tamanho != 2){
+            if(p->tamanho < 2){
                 printf("Função inválida");
                 exit(-1);
             }
@@ -160,55 +160,13 @@ Pilha *arvoreFuncao(char *str){
     return p;
 }
 
-
-/*Arvore *arvoreFuncao(char *str){
-    
-    int i;
-    Pilha *p = inicializaPilha();
-    Arvore *a = inicializaArvore();
-
-    for(i=0; i<strlen(str); i++){
-        
-        if((str[i] >= '0' && str[i] <= '9') || str[i] == 'x'){
-            
-            a = insereArvoreNULL(str[i], a);
-            inserePilha(a, p);
-        }
-        else if(str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/' || str[i] == '^'){
-
-            // o tamanho pode ser maior que dois, só não pode ser menor
-            if(p->tamanho != 2){
-                printf("Função inválida");
-                exit(-1);
-            }
-            a = insereArvoreNULL(str[i], a);
-            a->direita = p->topo->dado;
-            retiraPilha(p);
-            a->esquerda = p->topo->dado;
-            retiraPilha(p);
-            inserePilha(a, p);
-        }
-    }
-    a = p->topo->dado;
-    retiraPilha(p);
-    if(p->topo != NULL){
-        printf("Função inválida\n");
-        exit(-1);
-    }
-    free(p);
-    
-    return a;
-}*/
-
-
-
 int main (void){
 
     char str[50];
     gets(str);
     Pilha *p = inicializaPilha();
     p = arvoreFuncao(str);
-    imprimeFUncaoPilha(p);
+    imprimeFuncaoPilha(p);
     
     return 0;
 }
